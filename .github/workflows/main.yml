@@ -22,7 +22,7 @@ jobs:
     - name: Run PyInstaller
       run: pyinstaller your-code.py
     - name: Upload artifact
-      uses: actions/upload-artifact@v2
+      uses: actions/upload-artifact@v4
       with:
         name: LoDis-Flasher-${{ matrix.os }}
         path: dist/*
