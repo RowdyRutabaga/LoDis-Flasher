@@ -7,16 +7,22 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: ['windows-latest', 'ubuntu-latest, 'macos-latest']
+        os: ['windows-latest', 'ubuntu-latest', 'macos-latest']
+        python-version: ['3.13']
 
     steps:
-    - uses: actions/checkout@v2
-    - uses: actions/setup-python@v2
+    - name: Checkout repository
+      uses: actions/checkout@v2
+    - name: Set up Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v2
       with:
-        python-version: 3.13
-
-    - run: pip install -r requirements.txt pyinstaller
-    - run: pyinstaller your-code.py
-    - uses: actions/upload-artifact@v2
+        python-version: ${{ matrix.python-version }}
+    - name: Install dependencies and PyInstaller
+      run: pip install -r requirements.txt pyinstaller
+    - name: Run PyInstaller
+      run: pyinstaller your-code.py
+    - name: Upload artifact
+      uses: actions/upload-artifact@v2
       with:
+        name: LoDis-Flasher-${{ matrix.os }}
         path: dist/*
